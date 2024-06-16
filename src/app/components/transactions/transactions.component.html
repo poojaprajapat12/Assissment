@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">Transactions List</div>
+  <div class="card-body">
+    <!-- Filter and Search Section -->
+    <div class="mb-3 d-flex align-items-center">
+      <button class="btn btn-secondary mr-2" (click)="resetFiltersAndSorting()">Reset</button>
+      <input type="text" class="form-control d-inline-block w-auto mr-2" placeholder="Filter by Category" (input)="filterTransactionsByCategory($event)">
+    </div>
+
+    <!-- Error Message Display -->
+    <div *ngIf="errorMessage" class="alert alert-danger mb-3">{{ errorMessage }}</div>
+
+    <!-- Transactions List -->
+    <ul class="list-group">
+      <!-- List Items for Transactions -->
+      <li class="list-group-item" *ngFor="let transaction of filteredTransactions">
+        <div class="d-flex justify-content-between align-items-center">
+          <!-- Transaction Details -->
+          <div>
+            <span class="font-weight-bold">{{ transaction.date | date }}</span>
+            <span class="ml-2">{{ transaction.category }}</span>
+            <span class="ml-2">{{ transaction.amount | currency }}</span>
+          </div>
+          <!-- Actions: Edit and Delete -->
+          <div>
+            <button class="btn btn-warning btn-sm m-1" (click)="onEditTransaction(transaction)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="onDeleteTransaction(transaction.id)">Delete</button>
+          </div>
+        </div>
+      </li>
+      <!-- Message when no transactions are available -->
+      <li *ngIf="filteredTransactions.length === 0" class="list-group-item">No transactions available</li>
+    </ul>
+
+    <hr>
+
+    <!-- Transaction Form Section -->
+    <h3>{{ isEditing ? 'Edit' : 'Add' }} Transaction</h3>
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmitTransactionForm()">
+      <div class="form-row">
+        <!-- Category Input -->
+        <div class="form-group col-md-4">
+          <label for="category">Category</label>
+          <input type="text" class="form-control" id="category" formControlName="category">
+          <div *ngIf="transactionForm.get('category')!.invalid && (transactionForm.get('category')!.dirty || transactionForm.get('category')!.touched)" class="text-danger">
+            Category is required.
+          </div>
+        </div>
+        <!-- Amount Input -->
+        <div class="form-group col-md-4">
+          <label for="amount">Amount</label>
+          <input type="number" class="form-control" id="amount" formControlName="amount">
+          <div *ngIf="transactionForm.get('amount')!.invalid && (transactionForm.get('amount')!.dirty || transactionForm.get('amount')!.touched)" class="text-danger">
+            Amount is required and must be greater than or equal to 0.
+          </div>
+        </div>
+        <!-- Date Input -->
+        <div class="form-group col-md-4">
+          <label for="date">Date</label>
+          <input type="date" class="form-control" id="date" formControlName="date">
+          <div *ngIf="transactionForm.get('date')!.invalid && (transactionForm.get('date')!.dirty || transactionForm.get('date')!.touched)" class="text-danger">
+            Date is required.
+          </div>
+        </div>
+      </div>
+      <!-- Submit and Reset Form Buttons -->
+      <button type="submit" class="btn btn-primary">{{ isEditing ? 'Update' : 'Add' }} Transaction</button>
+      <button type="button" class="btn btn-secondary ml-2" (click)="resetForm()">Reset Form</button>
+    </form>
+
+    <!-- Budget Exceeded Message -->
+    <div *ngIf="budgetExceededMessage" class="alert alert-warning mt-3">
+      {{ budgetExceededMessage }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<!-- <div>
+  <ngx-charts-bar-vertical
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="barChartData"
+    [gradient]="false"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="showLegend"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Month'"
+    [yAxisLabel]="'Amount'"
+    [legendTitle]="legendTitle">
+  </ngx-charts-bar-vertical>
+</div> -->
+
+<div>
+  <ngx-charts-pie-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="pieChartData"
+    [legend]="showLegend"
+    [legendTitle]="legendTitle">
+  </ngx-charts-pie-chart>
+</div>
+
+<button (click)="exportToPDF()">Export to PDF</button>
+<button (click)="exportToExcel()">Export to Excel</button>

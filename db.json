@@ -1,0 +1,66 @@
+{
+  "transactions": [
+    {
+      "id": "0",
+      "amount": 200,
+      "category": "v",
+      "type": "income",
+      "date": "2024-06-13"
+    },
+    {
+      "id": "0",
+      "amount": 200,
+      "category": "shooping",
+      "type": "expense",
+      "date": "2024-06-13"
+    },
+    {
+      "id": 0,
+      "amount": 100,
+      "category": "xt",
+      "type": "income",
+      "date": "2024-06-14"
+    },
+    {
+      "id": 0,
+      "amount": 200,
+      "category": "hgd",
+      "type": "income",
+      "date": "2024-06-13"
+    },
+    {
+      "id": 0,
+      "amount": 2000,
+      "category": "dhghdhg",
+      "type": "expense",
+      "date": "2024-06-13"
+    },
+    {
+      "id": 0,
+      "amount": 10,
+      "category": "sa",
+      "type": "income",
+      "date": "2024-06-14"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 0,
+      "category": "sp",
+      "amount": 100,
+      "period": "monthly"
+    },
+    {
+      "id": 0,
+      "category": "ass",
+      "amount": 200,
+      "period": "monthly"
+    },
+    {
+      "id": 0,
+      "category": "sap",
+      "amount": 120,
+      "period": "annual"
+    }
+  ]
+}

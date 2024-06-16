@@ -1,0 +1,102 @@
+<div class="container mt-4">
+  <h2>Financial Summary</h2>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Income</h5>
+          <p class="card-text">{{ totalIncome | currency }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Total Expenses</h5>
+          <p class="card-text">{{ totalExpenses | currency }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Current Balance</h5>
+          <p class="card-text">{{ currentBalance | currency }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h2>Recent Transactions</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let transaction of recentTransactions">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <span>{{ transaction.date | date }}</span>
+              <span class="badge badge-primary ml-2">{{ transaction.type }}</span>
+              <span>{{ transaction.amount | currency }}</span>
+              <span>{{ transaction.category }}</span>
+            </div>
+            <button class="btn btn-danger btn-sm" (click)="deleteTransaction(transaction.id)">Delete</button>
+          </div>
+        </li>
+        <li class="list-group-item" *ngIf="recentTransactions.length === 0">No recent transactions</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <h2>Add New Transaction</h2>
+  <form [formGroup]="newTransactionForm" (ngSubmit)="onSubmitTransactionForm()">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="amount">Amount</label>
+        <input type="number" class="form-control" id="amount" formControlName="amount">
+        <div *ngIf="newTransactionForm.get('amount')!.invalid && (newTransactionForm.get('amount')!.dirty || newTransactionForm.get('amount')!.touched)"
+             class="text-danger">
+          <div *ngIf="newTransactionForm.get('amount')!.errors?.['required']">
+            Amount is required.
+          </div>
+          <div *ngIf="newTransactionForm.get('amount')!.errors?.['min']">
+            Amount must be greater than 0.
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" formControlName="category">
+        <div *ngIf="newTransactionForm.get('category')!.invalid && (newTransactionForm.get('category')!.dirty || newTransactionForm.get('category')!.touched)"
+             class="text-danger">
+          Category is required.
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="type">Type</label>
+        <select class="form-control" id="type" formControlName="type">
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        <div *ngIf="newTransactionForm.get('type')!.invalid && (newTransactionForm.get('type')!.dirty || newTransactionForm.get('type')!.touched)"
+             class="text-danger">
+          Type is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="date">Date</label>
+        <input type="date" class="form-control" id="date" formControlName="date">
+        <div *ngIf="newTransactionForm.get('date')!.invalid && (newTransactionForm.get('date')!.dirty || newTransactionForm.get('date')!.touched)"
+             class="text-danger">
+          Date is required.
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

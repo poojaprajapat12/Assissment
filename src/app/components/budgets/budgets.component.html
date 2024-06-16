@@ -1,0 +1,56 @@
+<div class="container">
+  <h2>Budgets</h2>
+
+  <!-- Form to add new budget -->
+  <form [formGroup]="newBudgetForm" (ngSubmit)="onSubmitNewBudget()">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" formControlName="category">
+        <div *ngIf="newBudgetForm.get('category')!.invalid && (newBudgetForm.get('category')!.dirty || newBudgetForm.get('category')!.touched)" class="text-danger">
+          Category is required.
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="amount">Amount</label>
+        <input type="number" class="form-control" id="amount" formControlName="amount">
+        <div *ngIf="newBudgetForm.get('amount')!.invalid && (newBudgetForm.get('amount')!.dirty || newBudgetForm.get('amount')!.touched)" class="text-danger">
+          <div *ngIf="newBudgetForm.get('amount')!.errors?.['required']">
+            Amount is required.
+          </div>
+          <div *ngIf="newBudgetForm.get('amount')!.errors?.['min']">
+            Amount must be greater than or equal to 0.
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="period">Period</label>
+        <select class="form-control" id="period" formControlName="period">
+          <option value="monthly">Monthly</option>
+          <option value="annual">Annual</option>
+        </select>
+        <div *ngIf="newBudgetForm.get('period')!.invalid && (newBudgetForm.get('period')!.dirty || newBudgetForm.get('period')!.touched)" class="text-danger">
+          Period is required.
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Budget</button>
+  </form>
+
+  <hr>
+
+  <!-- Displaying budgets -->
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let budget of budgets">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h5>{{ budget.category }}</h5>
+          <p>Amount: {{ budget.amount | currency }}</p>
+          <p>Period: {{ budget.period }}</p>
+        </div>
+        <button class="btn btn-danger btn-sm" (click)="onDeleteBudget(budget.id)">Delete</button>
+      </div>
+    </li>
+    <li *ngIf="budgets.length === 0" class="list-group-item">No budgets available</li>
+  </ul>
+</div>
